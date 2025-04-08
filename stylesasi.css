@@ -1,0 +1,89 @@
+:root {
+    --primary-color: #1e3a8a;
+    --bg-color: #f9fafb;
+    --text-color: #1f2937;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+
+  header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  main {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  h2 {
+    margin-top: 0;
+  }
+
+  .event-info {
+    margin-bottom: 2rem;
+  }
+
+  .event-info p {
+    margin: 0.3rem 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 0.6rem;
+    text-align: left;
+  }
+
+  th {
+    background-color: #e5e7eb;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 0.4rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+
+  @media (max-width: 600px) {
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+
+    thead {
+      display: none;
+    }
+
+    tr {
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #ddd;
+    }
+
+    td {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+    }
+
+    td::before {
+      content: attr(data-label);
+      font-weight: bold;
+    }
+  }
