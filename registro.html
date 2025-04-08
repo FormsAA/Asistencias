@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lista de Asistencia</title>
+  <style>
+    :root {
+      --primary-color: #1e3a8a;
+      --bg-color: #f9fafb;
+      --text-color: #1f2937;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    .event-info {
+      margin-bottom: 2rem;
+    }
+
+    .event-info p {
+      margin: 0.3rem 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.6rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: #e5e7eb;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 0.4rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 600px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #ddd;
+      }
+
+      td {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+      }
+
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Lista de Asistencia</h1>
+  </header>
+
+  <main>
+    <section class="event-info" id="eventInfo">
+      <h2>Detalles del Evento</h2>
+      <p><strong>Tipo:</strong> <span id="tipo"></span></p>
+      <p><strong>Tema:</strong> <span id="tema"></span></p>
+      <p><strong>Subtemas:</strong> <span id="subtemas"></span></p>
+      <p><strong>Fecha:</strong> <span id="fecha"></span></p>
+      <p><strong>Hora:</strong> <span id="hora"></span></p>
+      <p><strong>Duración:</strong> <span id="duracion"></span></p>
+      <p><strong>Facilitador(a):</strong> <span id="facilitador"></span></p>
+    </section>
+
+    <section>
+      <h2>Registro de Asistentes</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Puesto</th>
+            <th>Área / Departamento</th>
+            <th>Firma</th>
+          </tr>
+        </thead>
+        <tbody id="tablaAsistencia">
+          <!-- Se generan filas automáticamente -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    // Leer el parámetro ID desde la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionId = urlParams.get('id');
+
+    if (sessionId && localStorage.getItem(sessionId)) {
+      const data = JSON.parse(localStorage.getItem(sessionId));
+
+      document.getElementById('tipo').textContent = data.tipo;
+      document.getElementById('tema').textContent = data.tema;
+      document.getElementById('subtemas').textContent = data.subtemas;
+      document.getElementById('fecha').textContent = data.fecha;
+      document.getElementById('hora').textContent = data.hora;
+      document.getElementById('duracion').textContent = data.duracion;
+      document.getElementById('facilitador').textContent = data.facilitador;
+    } else {
+      alert("Datos del evento no encontrados.");
+    }
+
+    // Generar filas para asistencia
+    const tabla = document.getElementById('tablaAsistencia');
+    for (let i = 1; i <= 15; i++) {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td data-label="#">${i}</td>
+        <td data-label="Nombre"><input type="text" placeholder="Nombre completo" /></td>
+        <td data-label="Puesto"><input type="text" /></td>
+        <td data-label="Área / Departamento"><input type="text" /></td>
+        <td data-label="Firma"><input type="text" /></td>
+      `;
+      tabla.appendChild(row);
+    }
+  </script>
+</body>
+</html>
