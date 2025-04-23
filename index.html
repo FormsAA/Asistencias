@@ -12,35 +12,47 @@
   </header>
 
   <main>
-    <section class="event-info" id="eventInfo">
-      <h2>Detalles del Evento</h2>
-      <p><strong>Tipo:</strong> <span id="tipo"></span></p>
-      <p><strong>Tema:</strong> <span id="tema"></span></p>
-      <p><strong>Subtemas:</strong> <span id="subtemas"></span></p>
-      <p><strong>Fecha:</strong> <span id="fecha"></span></p>
-      <p><strong>Hora:</strong> <span id="hora"></span></p>
-      <p><strong>Duración:</strong> <span id="duracion"></span></p>
-      <p><strong>Facilitador(a):</strong> <span id="facilitador"></span></p>
-    </section>
-
-    <section>
-      <h2>Registro de Asistentes</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Puesto</th>
-            <th>Área / Departamento</th>
-            <th>Firma</th>
-          </tr>
-        </thead>
-        <tbody id="tablaAsistencia">
-          <!-- Se generan filas automáticamente -->
-        </tbody>
-      </table>
-    </section>
+    <form id="asistenciaForm">
+      <input type="hidden" name="id" id="id" />
+      <label>Nombre Completo: <input type="text" name="nombre" required /></label>
+      <label>Puesto: <input type="text" name="puesto" required /></label>
+      <label>Área / Departamento: <input type="text" name="area" required /></label>
+      <label>Firma: <input type="text" name="firma" required /></label>
+      <button type="submit">Registrar</button>
+    </form>
   </main>
-  <script src="./registro.js"></script>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionId = urlParams.get('id');
+    document.getElementById('id').value = sessionId;
+
+    document.getElementById('asistenciaForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      formData.append("accion", "asistencia");
+
+      const params = new URLSearchParams(formData);
+
+      try {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbxnqOIZB0y_rEpOsHy9wSulJtWUIgGoteI8lSFugsk4FItJHVEZyEK4lt_oPmJH6_8XIg/exec", {
+          method: 'POST',
+          body: params
+        });
+
+        const result = await response.json();
+        if (result.status === "ok") {
+          alert("✅ Asistencia registrada correctamente.");
+          this.reset();
+        } else {
+          alert("❌ Error al registrar: " + result.message);
+        }
+      } catch (err) {
+        console.error(err);
+        alert("❌ Error de conexión.");
+      }
+    });
+  </script>
 </body>
 </html>
