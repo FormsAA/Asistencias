@@ -6,19 +6,25 @@ document.getElementById('asistenciaForm').addEventListener('submit', async funct
   e.preventDefault();
 
   const nombre = document.getElementById('nombre').value.trim();
+  const puesto = document.getElementById('puesto').value.trim();
+  const area = document.getElementById('area').value.trim();
+  const firma = document.getElementById('firma').value.trim();
 
-  if (!nombre) {
-    alert("Por favor escribe tu nombre.");
+  if (!nombre || !puesto || !area || !firma) {
+    alert("Por favor completa todos los campos.");
     return;
   }
 
   const formData = new URLSearchParams({
     accion: "registrarAsistente",
     id: sessionId,
-    nombre
+    nombre,
+    puesto,
+    area,
+    firma
   });
 
-  await fetch("https://script.google.com/macros/s/AKfycbyZ7cy1GJs1afq7pN8ufhsHagQ6Qz5HvzRVKQTFU63SBVb-x-9OyNW2O0N4OoyQlGev6A/exec", {
+  await fetch("https://script.google.com/macros/s/TU_WEB_APP_ID/exec", {
     method: "POST",
     body: formData
   });
