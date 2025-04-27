@@ -24,7 +24,7 @@ document.getElementById('asistenciaForm').addEventListener('submit', async funct
     firma
   });
 
-  await fetch("https://script.google.com/macros/s/TU_WEB_APP_ID/exec", {
+  await fetch("https://script.google.com/macros/s/AKfycbx3DNI9EBJ6c7P27b4vFJDzL_emUsZkhV2yFheED94qR0AvDrJQbJD-c81rdiEtatNYuA/exec", {
     method: "POST",
     body: formData
   });
