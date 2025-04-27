@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registro de Evento</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+</head>
+<body>
+  <main>
+    <h1>Formulario del Supervisor</h1>
+    <form id="eventoForm">
+      <label>Tipo de evento:
+        <select id="tipo" required>
+          <option value="">Seleccione</option>
+          <option>Junta Directiva</option>
+          <option>Reunión</option>
+          <option>Capacitación</option>
+          <option>Entrenamiento</option>
+        </select>
+      </label>
+
+      <label>Tema:
+        <input type="text" id="tema" required>
+      </label>
+
+      <label>Subtemas:
+        <textarea id="subtemas" rows="2"></textarea>
+      </label>
+
+      <label>Fecha:
+        <input type="date" id="fecha" required>
+      </label>
+
+      <label>Hora:
+        <input type="time" id="hora" required>
+      </label>
+
+      <label>Duración:
+        <input type="text" id="duracion" required placeholder="Ej. 2 horas">
+      </label>
+
+      <label>Facilitador:
+        <input type="text" id="facilitador" required>
+      </label>
+
+      <!-- 🆕 NUEVO campo para ingresar el correo del supervisor -->
+      <label>Correo del Supervisor:
+        <input type="email" id="correoSupervisor" required placeholder="ejemplo@correo.com">
+      </label>
+
+      <button type="submit">Generar QR</button>
+    </form>
+
+    <section id="codigoQR" style="display:none;">
+      <h2>Escanee para registrar asistencia:</h2>
+      <canvas id="qrCanvas"></canvas>
+      <p id="urlTexto"></p>
+
+      <p><strong>Sube las fotos de evidencia:</strong></p>
+      <label>Foto 1:
+        <input type="file" id="foto1" accept="image/*" required>
+      </label>
+      <label>Foto 2:
+        <input type="file" id="foto2" accept="image/*" required>
+      </label>
+
+      <button id="cerrarAsistencia">Cerrar Asistencia</button>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
