@@ -8,16 +8,23 @@ const firmaCanvas = document.getElementById('firmaCanvas');
 const firmaCtx = firmaCanvas.getContext('2d');
 const firmaDataURLInput = document.getElementById('firmaDataURL');
 
+// Configuración inicial del contexto del canvas para la firma
+firmaCtx.lineWidth = 2; // Grosor de la línea
+firmaCtx.lineCap = 'round'; // Borde redondeado
+firmaCtx.strokeStyle = 'black'; // Color de la línea (negro)
+
 let drawing = false;
 
 firmaCanvas.addEventListener('mousedown', (e) => {
   drawing = true;
   firmaCtx.beginPath();
+  // Ajustar la posición inicial del dibujo al inicio del trazo del ratón
   firmaCtx.moveTo(e.offsetX, e.offsetY);
 });
 
 firmaCanvas.addEventListener('mousemove', (e) => {
   if (!drawing) return;
+  // Dibujar una línea desde la posición anterior hasta la actual
   firmaCtx.lineTo(e.offsetX, e.offsetY);
   firmaCtx.stroke();
 });
@@ -41,13 +48,20 @@ document.getElementById('asistenciaForm').addEventListener('submit', async funct
   const nombre = document.getElementById('nombre').value.trim();
   const area = document.getElementById('area').value.trim();
 
+  // Validar que se haya dibujado algo en el canvas
+  const isCanvasBlank = !(firmaCtx.getImageData(0, 0, firmaCanvas.width, firmaCanvas.height).data.some(channel => channel !== 0));
+
   if (!nombre || !area) {
-    alert("Por favor completa todos los campos (Nombre Completo, Área / Departamento).");
+    alert("Por favor completa los campos 'Nombre Completo' y 'Área / Departamento'.");
+    return;
+  }
+  if (isCanvasBlank) {
+    alert("Por favor, dibuja tu firma en el campo de firma.");
     return;
   }
 
   // Obtener la Data URL de la firma
-  const firmaDataURL = firmaCanvas.toDataURL();
+  const firmaDataURL = firmaCanvas.toDataURL('image/png'); // Asegúrate de que sea PNG
   firmaDataURLInput.value = firmaDataURL;
 
   registrarBtn.disabled = true;
@@ -57,13 +71,14 @@ document.getElementById('asistenciaForm').addEventListener('submit', async funct
     accion: "registrarAsistente",
     id: sessionId,
     nombre: nombre,
-    puesto: "N/A", // Se envía "N/A" para el campo puesto que ya no se recolecta
+    puesto: "N/A", // Se mantiene "N/A" por si el Apps Script aún espera esta columna
     area: area,
     firma: firmaDataURL // Enviar la Data URL
   });
 
   try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbxWLo9tqC8KYw_nfzKDdTTtGDaec66HaQ9R7U5IDCDAVa3jMerGsHZoH-PfT5MSxOrtng/exec", {
+    // Es crucial que esta URL sea la de TU Web App de Google Apps Script
+    const response = await fetch("https://script.google.com/macros/s/AKfycbz79zURcTLHlaaZv5CJy_I8mRx-Hjle2ekNf3toH_qg-7ujVFuBxCVBUKLuSiyEEzlcVw/exec", {
       method: "POST",
       body: formData
     });
@@ -75,15 +90,15 @@ document.getElementById('asistenciaForm').addEventListener('submit', async funct
       firmaCtx.clearRect(0, 0, firmaCanvas.width, firmaCanvas.height); // Limpiar el canvas después de éxito
       firmaDataURLInput.value = '';
     } else {
-      alert("❌ Ocurrió un error al registrar la asistencia: " + (data.error || 'Error desconocido'));
-      console.error("Error:", data);
+      alert("❌ Ocurrió un error al registrar la asistencia: " + (data.error || 'Error desconocido. Revisa la consola para más detalles.'));
+      console.error("Error del servidor (Apps Script):", data);
     }
     registrarBtn.disabled = false;
     registrarBtn.textContent = 'Registrar Asistencia';
 
   } catch (error) {
-    alert("❌ Ocurrió un error al registrar la asistencia. Por favor, inténtalo de nuevo.");
-    console.error("Error:", error);
+    alert("❌ Ocurrió un error de red al registrar la asistencia. Por favor, inténtalo de nuevo.");
+    console.error("Error de red/fetch:", error);
     registrarBtn.disabled = false;
     registrarBtn.textContent = 'Registrar Asistencia';
   }
