@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lista de Asistencia</title>
   <link rel="stylesheet" href="./styles.css">
+  <style>
+    #firmaCanvas {
+      cursor: crosshair;
+    }
+  </style>
 </head>
 <body>
   <main>
@@ -16,19 +21,16 @@
         <input type="text" id="nombre" required>
       </label>
 
-      <label>Puesto:
-        <input type="text" id="puesto" required>
-      </label>
-
       <label>Área / Departamento:
         <input type="text" id="area" required>
       </label>
 
-      <label>Firma:
-        <input type="text" id="firma" required placeholder="Escribe tu nombre como firma">
-      </label>
+      <label for="firmaCanvas">Firma:</label>
+      <canvas id="firmaCanvas" width="300" height="150" style="border:1px solid #ccc;"></canvas><br>
+      <button type="button" id="limpiarFirma">Limpiar Firma</button>
+      <input type="hidden" id="firmaDataURL" name="firma">
 
-      <button type="submit">Registrar Asistencia</button>
+      <button type="submit" id="registrarBtn">Registrar Asistencia</button>
     </form>
   </main>
   <script src="./registro.js"></script>
