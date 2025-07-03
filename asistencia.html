@@ -5,14 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lista de Asistencia</title>
   <link rel="stylesheet" href="./styles.css">
-  <style>
-    #firmaCanvas {
-      cursor: crosshair;
-      /* Asegura que el canvas tenga un fondo blanco para firmas en negro */
-      background-color: #fff; 
-    }
-  </style>
-</head>
+  </head>
 <body>
   <main>
     <h1>Registro de Asistencia</h1>
@@ -27,10 +20,9 @@
         <input type="text" id="area" required>
       </label>
 
-      <label for="firmaCanvas">Firma:</label>
-      <canvas id="firmaCanvas" width="300" height="150" style="border:1px solid #ccc;"></canvas><br>
-      <button type="button" id="limpiarFirma">Limpiar Firma</button>
-      <input type="hidden" id="firmaDataURL" name="firma">
+      <label>Firma:
+        <input type="text" id="firma" required placeholder="Escribe tu nombre como firma">
+      </label>
 
       <button type="submit" id="registrarBtn">Registrar Asistencia</button>
     </form>
