@@ -63,7 +63,7 @@ document.getElementById('asistenciaForm').addEventListener('submit', async funct
   });
 
   try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbz79zURcTLHlaaZv5CJy_I8mRx-Hjle2ekNf3toH_qg-7ujVFuBxCVBUKLuSiyEEzlcVw/exec", {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbxWLo9tqC8KYw_nfzKDdTTtGDaec66HaQ9R7U5IDCDAVa3jMerGsHZoH-PfT5MSxOrtng/exec", {
       method: "POST",
       body: formData
     });
