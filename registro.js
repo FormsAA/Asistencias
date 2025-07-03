@@ -31,7 +31,7 @@ document.getElementById('asistenciaForm').addEventListener('submit', async funct
 
   try {
     // Es crucial que esta URL sea la de TU Web App de Google Apps Script
-    const response = await fetch("https://script.google.com/macros/s/AKfycbz79zURcTLHlaaZv5CJy_I8mRx-Hjle2ekNf3toH_qg-7ujVFuBxCVBUKLuSiyEEzlcVw/exec", {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbxaMDGLCJYNikMlGifiuheoCCJtfdpa_sXEAbve8VT7WuPcjr_YC8caBsdwuf-okdtz/exec", {
       method: "POST",
       body: formData
     });
